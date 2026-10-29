@@ -1,6 +1,8 @@
 package auca.ac.rw.vote_sphere_voting_management_system.controller;
 
 import java.util.List;
+import java.time.LocalDate;
+import auca.ac.rw.vote_sphere_voting_management_system.entity.BallotStatus;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -57,5 +59,17 @@ public class BallotController {
             return ResponseEntity.status(HttpStatus.OK).body(message);
         }
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(message);
+    }
+
+        @GetMapping("/by-status")
+    public List<Ballot> getByStatus(@RequestParam BallotStatus status) {
+        return ballotService.getByStatus(status);
+    }
+
+    @GetMapping("/between")
+    public List<Ballot> getBetween(@RequestParam String start, @RequestParam String end) {
+        LocalDate startDate = LocalDate.parse(start);
+        LocalDate endDate = LocalDate.parse(end);
+        return ballotService.getBetween(startDate, endDate);
     }
 }

@@ -52,4 +52,8 @@ public class VoterService {
         voterRepository.deleteById(id);
         return "Voter deleted successfully";
     }
+
+        public List<Voter> getByLastName(String lastName) {
+        return voterRepository.findByLastNameIgnoreCaseOrderByFirstNameAsc(lastName);
+    }
 }

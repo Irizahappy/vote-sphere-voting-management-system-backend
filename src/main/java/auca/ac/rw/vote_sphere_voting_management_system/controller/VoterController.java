@@ -59,4 +59,9 @@ public class VoterController {
         }
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(message);
     }
+
+        @GetMapping("/by-last-name")
+    public List<Voter> getByLastName(@RequestParam String lastName) {
+        return voterService.getByLastName(lastName);
+    }
 }

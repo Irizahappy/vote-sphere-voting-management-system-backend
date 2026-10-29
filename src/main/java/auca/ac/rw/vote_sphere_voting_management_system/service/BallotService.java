@@ -1,6 +1,8 @@
 package auca.ac.rw.vote_sphere_voting_management_system.service;
 
 import java.util.List;
+import java.time.LocalDate;
+import auca.ac.rw.vote_sphere_voting_management_system.entity.BallotStatus;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -52,5 +54,13 @@ public class BallotService {
         }
         ballotRepository.deleteById(id);
         return "Ballot deleted successfully";
+    }
+
+        public List<Ballot> getByStatus(BallotStatus status) {
+        return ballotRepository.findByStatusOrderByPollDateAsc(status);
+    }
+
+    public List<Ballot> getBetween(LocalDate start, LocalDate end) {
+        return ballotRepository.findByPollDateBetweenOrderByPollDateAsc(start, end);
     }
 }
