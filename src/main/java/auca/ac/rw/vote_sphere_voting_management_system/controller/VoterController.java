@@ -64,4 +64,13 @@ public class VoterController {
     public List<Voter> getByLastName(@RequestParam String lastName) {
         return voterService.getByLastName(lastName);
     }
+
+        @GetMapping("/of-election-officer/{electionOfficerId}")
+    public ResponseEntity<Object> getByElectionOfficer(@PathVariable UUID electionOfficerId) {
+        Optional<List<Voter>> voters = voterService.getByElectionOfficer(electionOfficerId);
+        if (voters.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("The election officer with that id does not exist");
+        }
+        return ResponseEntity.status(HttpStatus.OK).body(voters.get());
+    }
 }

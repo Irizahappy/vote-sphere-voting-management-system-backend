@@ -7,15 +7,18 @@ import java.util.UUID;
 import org.springframework.stereotype.Service;
 
 import auca.ac.rw.vote_sphere_voting_management_system.entity.Voter;
+import auca.ac.rw.vote_sphere_voting_management_system.repository.ElectionOfficerRepository;
 import auca.ac.rw.vote_sphere_voting_management_system.repository.VoterRepository;
 
 @Service
 public class VoterService {
 
     private final VoterRepository voterRepository;
+    private final ElectionOfficerRepository electionOfficerRepository;
 
-    public VoterService(VoterRepository voterRepository) {
+    public VoterService(VoterRepository voterRepository, ElectionOfficerRepository electionOfficerRepository) {
         this.voterRepository = voterRepository;
+        this.electionOfficerRepository = electionOfficerRepository;
     }
 
     public String save(Voter voter) {
@@ -53,7 +56,14 @@ public class VoterService {
         return "Voter deleted successfully";
     }
 
-        public List<Voter> getByLastName(String lastName) {
+    public List<Voter> getByLastName(String lastName) {
         return voterRepository.findByLastNameIgnoreCaseOrderByFirstNameAsc(lastName);
+    }
+
+    public Optional<List<Voter>> getByElectionOfficer(UUID electionOfficerId) {
+        if (!electionOfficerRepository.existsById(electionOfficerId)) {
+            return Optional.empty();
+        }
+        return Optional.of(voterRepository.votersOfElectionOfficer(electionOfficerId));
     }
 }

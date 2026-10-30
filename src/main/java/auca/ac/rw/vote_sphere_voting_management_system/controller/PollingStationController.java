@@ -58,4 +58,9 @@ public class PollingStationController {
         }
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(message);
     }
+
+        @GetMapping("/free")
+    public List<PollingStation> getFree() {
+        return pollingStationService.getFree();
+    }
 }

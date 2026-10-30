@@ -58,4 +58,9 @@ public class ElectionOfficerController {
         }
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(message);
     }
+
+        @GetMapping("/by-poll-type")
+    public List<ElectionOfficer> getByPollType(@RequestParam String name) {
+        return electionOfficerService.getByPollType(name);
+    }
 }

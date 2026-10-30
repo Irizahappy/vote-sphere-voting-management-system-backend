@@ -50,4 +50,8 @@ public class PollingStationService {
         pollingStationRepository.deleteById(id);
         return "Polling station deleted successfully";
     }
+
+        public List<PollingStation> getFree() {
+        return pollingStationRepository.freeStations();
+    }
 }

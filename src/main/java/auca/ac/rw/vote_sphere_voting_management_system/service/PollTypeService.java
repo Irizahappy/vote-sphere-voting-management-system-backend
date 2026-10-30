@@ -49,4 +49,8 @@ public class PollTypeService {
         pollTypeRepository.deleteById(id);
         return "Poll type deleted successfully";
     }
+
+        public List<PollType> getUnused() {
+        return pollTypeRepository.unusedPollTypes();
+    }
 }

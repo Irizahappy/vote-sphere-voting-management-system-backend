@@ -52,4 +52,8 @@ public class ElectionOfficerService {
         electionOfficerRepository.deleteById(id);
         return "Election officer deleted successfully";
     }
+
+        public List<ElectionOfficer> getByPollType(String name) {
+        return electionOfficerRepository.searchByPollTypeName(name);
+    }
 }

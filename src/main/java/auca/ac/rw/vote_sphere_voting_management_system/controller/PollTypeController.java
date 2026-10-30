@@ -58,4 +58,9 @@ public class PollTypeController {
         }
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(message);
     }
+
+        @GetMapping("/unused")
+    public List<PollType> getUnused() {
+        return pollTypeService.getUnused();
+    }
 }
