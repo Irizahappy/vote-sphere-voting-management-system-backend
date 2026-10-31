@@ -10,14 +10,17 @@ import org.springframework.stereotype.Service;
 import auca.ac.rw.vote_sphere_voting_management_system.entity.Ballot;
 import auca.ac.rw.vote_sphere_voting_management_system.entity.BallotStatus;
 import auca.ac.rw.vote_sphere_voting_management_system.repository.BallotRepository;
+import auca.ac.rw.vote_sphere_voting_management_system.repository.VoteEntryRepository;
 
 @Service
 public class BallotService {
 
     private final BallotRepository ballotRepository;
+    private final VoteEntryRepository voteEntryRepository;
 
-    public BallotService(BallotRepository ballotRepository) {
+    public BallotService(BallotRepository ballotRepository, VoteEntryRepository voteEntryRepository) {
         this.ballotRepository = ballotRepository;
+        this.voteEntryRepository = voteEntryRepository;
     }
 
     public String save(Ballot ballot) {
@@ -57,8 +60,12 @@ public class BallotService {
     }
 
     public String delete(UUID id) {
-        if (!ballotRepository.existsById(id)) {
+        Optional<Ballot> optionalBallot = ballotRepository.findById(id);
+        if (optionalBallot.isEmpty()) {
             return "The ballot with that id does not exist";
+        }
+        if (voteEntryRepository.existsByBallot(optionalBallot.get())) {
+            return "That ballot has vote entries, delete them first";
         }
         ballotRepository.deleteById(id);
         return "Ballot deleted successfully";

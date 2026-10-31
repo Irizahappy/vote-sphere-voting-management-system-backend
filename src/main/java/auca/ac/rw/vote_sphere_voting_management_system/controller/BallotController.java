@@ -57,12 +57,14 @@ public class BallotController {
         }
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(message);
     }
-
-    @DeleteMapping("/delete/{id}")
+        @DeleteMapping("/delete/{id}")
     public ResponseEntity<String> delete(@PathVariable UUID id) {
         String message = ballotService.delete(id);
         if (message.equals("Ballot deleted successfully")) {
             return ResponseEntity.status(HttpStatus.OK).body(message);
+        }
+        if (message.equals("That ballot has vote entries, delete them first")) {
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(message);
         }
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(message);
     }
