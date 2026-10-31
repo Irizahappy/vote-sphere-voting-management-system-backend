@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import auca.ac.rw.vote_sphere_voting_management_system.entity.ElectionOfficer;
+import auca.ac.rw.vote_sphere_voting_management_system.entity.PollingStation;
 
 public interface ElectionOfficerRepository extends JpaRepository<ElectionOfficer, UUID> {
 
@@ -17,4 +18,6 @@ public interface ElectionOfficerRepository extends JpaRepository<ElectionOfficer
         WHERE LOWER(c.name) LIKE LOWER(CONCAT('%', :name, '%'))
         """)
     List<ElectionOfficer> searchByPollTypeName(@Param("name") String name);
+
+    boolean existsByPollingStation(PollingStation pollingStation);
 }

@@ -1,8 +1,7 @@
 package auca.ac.rw.vote_sphere_voting_management_system.controller;
 
-import java.util.List;
 import java.time.LocalDate;
-import auca.ac.rw.vote_sphere_voting_management_system.entity.BallotStatus;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -11,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import auca.ac.rw.vote_sphere_voting_management_system.entity.Ballot;
+import auca.ac.rw.vote_sphere_voting_management_system.entity.BallotStatus;
 import auca.ac.rw.vote_sphere_voting_management_system.service.BallotService;
 
 @RestController
@@ -26,7 +26,13 @@ public class BallotController {
     @PostMapping("/save")
     public ResponseEntity<String> save(@RequestBody Ballot ballot) {
         String message = ballotService.save(ballot);
-        return ResponseEntity.status(HttpStatus.CREATED).body(message);
+        if (message.equals("Ballot saved successfully")) {
+            return ResponseEntity.status(HttpStatus.CREATED).body(message);
+        }
+        if (message.equals("Ballot date cannot be in the past")) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(message);
+        }
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(message);
     }
 
     @GetMapping("/all")
@@ -61,7 +67,7 @@ public class BallotController {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(message);
     }
 
-        @GetMapping("/by-status")
+    @GetMapping("/by-status")
     public List<Ballot> getByStatus(@RequestParam BallotStatus status) {
         return ballotService.getByStatus(status);
     }
@@ -71,5 +77,17 @@ public class BallotController {
         LocalDate startDate = LocalDate.parse(start);
         LocalDate endDate = LocalDate.parse(end);
         return ballotService.getBetween(startDate, endDate);
+    }
+
+    @PatchMapping("/{id}/status")
+    public ResponseEntity<String> changeStatus(@PathVariable UUID id, @RequestParam BallotStatus status) {
+        String message = ballotService.changeStatus(id, status);
+        if (message.equals("Ballot status updated successfully")) {
+            return ResponseEntity.status(HttpStatus.OK).body(message);
+        }
+        if (message.equals("The ballot with that id does not exist")) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(message);
+        }
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(message);
     }
 }

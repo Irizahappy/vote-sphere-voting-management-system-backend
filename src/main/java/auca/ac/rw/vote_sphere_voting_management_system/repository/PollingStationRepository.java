@@ -1,6 +1,7 @@
 package auca.ac.rw.vote_sphere_voting_management_system.repository;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -16,4 +17,6 @@ public interface PollingStationRepository extends JpaRepository<PollingStation, 
         ORDER BY l.stationNumber
         """)
     List<PollingStation> freeStations();
+
+    Optional<PollingStation> findByStationNumber(int stationNumber);
 }

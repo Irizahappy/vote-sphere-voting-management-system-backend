@@ -14,4 +14,6 @@ public interface BallotRepository extends JpaRepository<Ballot, UUID> {
     List<Ballot> findByStatusOrderByPollDateAsc(BallotStatus status);
 
     List<Ballot> findByPollDateBetweenOrderByPollDateAsc(LocalDate start, LocalDate end);
+
+    boolean existsByElectionOfficerIdAndPollDateAndStatusNot(UUID electionOfficerId, LocalDate pollDate, BallotStatus status);
 }

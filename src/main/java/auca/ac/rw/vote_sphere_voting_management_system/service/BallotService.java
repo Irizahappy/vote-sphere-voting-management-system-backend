@@ -1,14 +1,14 @@
 package auca.ac.rw.vote_sphere_voting_management_system.service;
 
-import java.util.List;
 import java.time.LocalDate;
-import auca.ac.rw.vote_sphere_voting_management_system.entity.BallotStatus;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
 import org.springframework.stereotype.Service;
 
 import auca.ac.rw.vote_sphere_voting_management_system.entity.Ballot;
+import auca.ac.rw.vote_sphere_voting_management_system.entity.BallotStatus;
 import auca.ac.rw.vote_sphere_voting_management_system.repository.BallotRepository;
 
 @Service
@@ -21,6 +21,15 @@ public class BallotService {
     }
 
     public String save(Ballot ballot) {
+        if (ballot.getPollDate().isBefore(LocalDate.now())) {
+            return "Ballot date cannot be in the past";
+        }
+        boolean alreadyManaging = ballotRepository.existsByElectionOfficerIdAndPollDateAndStatusNot(
+                ballot.getElectionOfficer().getId(), ballot.getPollDate(), BallotStatus.SPOILED);
+        if (alreadyManaging) {
+            return "Election officer already manages a ballot on that date";
+        }
+        ballot.setStatus(BallotStatus.ISSUED);
         ballotRepository.save(ballot);
         return "Ballot saved successfully";
     }
@@ -40,7 +49,6 @@ public class BallotService {
         }
         Ballot ballot = optionalBallot.get();
         ballot.setPollDate(newBallot.getPollDate());
-        ballot.setStatus(newBallot.getStatus());
         ballot.setPollQuestion(newBallot.getPollQuestion());
         ballot.setVoter(newBallot.getVoter());
         ballot.setElectionOfficer(newBallot.getElectionOfficer());
@@ -56,11 +64,37 @@ public class BallotService {
         return "Ballot deleted successfully";
     }
 
-        public List<Ballot> getByStatus(BallotStatus status) {
+    public List<Ballot> getByStatus(BallotStatus status) {
         return ballotRepository.findByStatusOrderByPollDateAsc(status);
     }
 
     public List<Ballot> getBetween(LocalDate start, LocalDate end) {
         return ballotRepository.findByPollDateBetweenOrderByPollDateAsc(start, end);
+    }
+
+    public String changeStatus(UUID id, BallotStatus newStatus) {
+        Optional<Ballot> optionalBallot = ballotRepository.findById(id);
+        if (optionalBallot.isEmpty()) {
+            return "The ballot with that id does not exist";
+        }
+        Ballot ballot = optionalBallot.get();
+        BallotStatus currentStatus = ballot.getStatus();
+
+        boolean allowed = false;
+        if (currentStatus == BallotStatus.ISSUED
+                && (newStatus == BallotStatus.CAST || newStatus == BallotStatus.SPOILED)) {
+            allowed = true;
+        }
+        if (currentStatus == BallotStatus.CAST
+                && (newStatus == BallotStatus.COUNTED || newStatus == BallotStatus.SPOILED)) {
+            allowed = true;
+        }
+
+        if (!allowed) {
+            return "Cannot change status from " + currentStatus + " to " + newStatus;
+        }
+        ballot.setStatus(newStatus);
+        ballotRepository.save(ballot);
+        return "Ballot status updated successfully";
     }
 }

@@ -59,8 +59,33 @@ public class ElectionOfficerController {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(message);
     }
 
-        @GetMapping("/by-poll-type")
+    @GetMapping("/by-poll-type")
     public List<ElectionOfficer> getByPollType(@RequestParam String name) {
         return electionOfficerService.getByPollType(name);
+    }
+
+    @PutMapping("/{electionOfficerId}/poll-types/{pollTypeId}")
+    public ResponseEntity<String> addPollType(@PathVariable UUID electionOfficerId, @PathVariable UUID pollTypeId) {
+        String message = electionOfficerService.addPollType(electionOfficerId, pollTypeId);
+        if (message.equals("Poll type added to the election officer")) {
+            return ResponseEntity.status(HttpStatus.OK).body(message);
+        }
+        if (message.equals("The election officer already has that poll type")) {
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(message);
+        }
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(message);
+    }
+
+    @PatchMapping("/{electionOfficerId}/polling-station")
+    public ResponseEntity<String> changePollingStation(@PathVariable UUID electionOfficerId,
+            @RequestParam int stationNumber) {
+        String message = electionOfficerService.changePollingStation(electionOfficerId, stationNumber);
+        if (message.equals("Polling station changed successfully")) {
+            return ResponseEntity.status(HttpStatus.OK).body(message);
+        }
+        if (message.equals("That polling station is taken by another election officer")) {
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(message);
+        }
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(message);
     }
 }
