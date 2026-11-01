@@ -1,0 +1,469 @@
+{
+  "info": {
+    "_postman_id": "7051d3ce-bd49-4225-bac7-589bd5cd6474",
+    "name": "vote-sphere-voting-management-system-midterm",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "58444944",
+    "_collection_link": "https://go.postman.co/collection/58444944-7051d3ce-bd49-4225-bac7-589bd5cd6474?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "A2",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8080/api/voters/b6b44d13-a42e-4cb4-9578-87aa87f963a3",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "api",
+            "voters",
+            "b6b44d13-a42e-4cb4-9578-87aa87f963a3"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "B1",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8080/api/voters/by-last-name?lastName=iriza",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "api",
+            "voters",
+            "by-last-name"
+          ],
+          "query": [
+            {
+              "key": "lastName",
+              "value": "iriza"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "B2",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8080/api/ballots/by-status?status=ISSUED",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "api",
+            "ballots",
+            "by-status"
+          ],
+          "query": [
+            {
+              "key": "status",
+              "value": "ISSUED"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "B3",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8080/api/ballots/between?start=2026-10-01&end=2026-10-31",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "api",
+            "ballots",
+            "between"
+          ],
+          "query": [
+            {
+              "key": "start",
+              "value": "2026-10-01"
+            },
+            {
+              "key": "end",
+              "value": "2026-10-31"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "C1",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": ""
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "C2",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8080/api/polling-stations/free",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "api",
+            "polling-stations",
+            "free"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "C3",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": ""
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "C4",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": ""
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "D1",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"pollDate\": \"2026-12-01\",\r\n  \"status\": \"CAST\",\r\n  \"pollQuestion\": \"Test ballot\",\r\n  \"voter\": { \"id\": \"b6b44d13-a42e-4cb4-9578-87aa87f963a3\" },\r\n  \"electionOfficer\": { \"id\": \"435d1558-8707-482b-9ff7-ac4fa429fc3b\" }\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:8080/api/ballots/save",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "api",
+            "ballots",
+            "save"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "D2",
+      "request": {
+        "method": "PATCH",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8080/api/ballots/4309da7d-33a9-489d-aa67-3d1acf51ad0d/status?status=CAST",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "api",
+            "ballots",
+            "4309da7d-33a9-489d-aa67-3d1acf51ad0d",
+            "status"
+          ],
+          "query": [
+            {
+              "key": "status",
+              "value": "CAST"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "D3",
+      "request": {
+        "method": "PUT",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8080/api/election-officers/7bd2c068-213a-411f-9e65-0e1397d04116/poll-types/f950ef95-70ca-4685-af84-c508502cac7b",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "api",
+            "election-officers",
+            "7bd2c068-213a-411f-9e65-0e1397d04116",
+            "poll-types",
+            "f950ef95-70ca-4685-af84-c508502cac7b"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "D4",
+      "request": {
+        "method": "PATCH",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8080/api/election-officers/7bd2c068-213a-411f-9e65-0e1397d04116/polling-station?stationNumber=4",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "api",
+            "election-officers",
+            "7bd2c068-213a-411f-9e65-0e1397d04116",
+            "polling-station"
+          ],
+          "query": [
+            {
+              "key": "stationNumber",
+              "value": "4"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "E1",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"optionChosen\": \"Candidate A\",\r\n  \"remark\": \"Valid vote, clearly marked\",\r\n  \"weight\": 1\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:8080/api/vote-entries/save?ballotId=0aa16a1c-5101-4906-ad52-3692542d82bc",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "api",
+            "vote-entries",
+            "save"
+          ],
+          "query": [
+            {
+              "key": "ballotId",
+              "value": "0aa16a1c-5101-4906-ad52-3692542d82bc"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "E2",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8080/api/vote-entries/voter/VT-2026-0188",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "api",
+            "vote-entries",
+            "voter",
+            "VT-2026-0188"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "E3",
+      "request": {
+        "method": "DELETE",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8080/api/ballots/delete/0aa16a1c-5101-4906-ad52-3692542d82bc",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "api",
+            "ballots",
+            "delete",
+            "0aa16a1c-5101-4906-ad52-3692542d82bc"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "F1",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8080/api/ballots/stats/by-status",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "api",
+            "ballots",
+            "stats",
+            "by-status"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "F2",
+      "request": {
+        "method": "PATCH",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8080/api/ballots/cancel-day?electionOfficerId=435d1558-8707-482b-9ff7-ac4fa429fc3b&date=2026-12-15",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "api",
+            "ballots",
+            "cancel-day"
+          ],
+          "query": [
+            {
+              "key": "electionOfficerId",
+              "value": "435d1558-8707-482b-9ff7-ac4fa429fc3b"
+            },
+            {
+              "key": "date",
+              "value": "2026-12-15"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Bonus dashboard",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8080/api/dashboard/summary",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "api",
+            "dashboard",
+            "summary"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Bonus page",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8080/api/ballots/page?page=0&size=5&sort=pollDate,desc",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "api",
+            "ballots",
+            "page"
+          ],
+          "query": [
+            {
+              "key": "page",
+              "value": "0"
+            },
+            {
+              "key": "size",
+              "value": "5"
+            },
+            {
+              "key": "sort",
+              "value": "pollDate,desc"
+            }
+          ]
+        }
+      },
+      "response": []
+    }
+  ]
+}
