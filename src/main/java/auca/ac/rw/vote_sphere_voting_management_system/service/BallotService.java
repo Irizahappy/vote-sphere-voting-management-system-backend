@@ -6,6 +6,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import auca.ac.rw.vote_sphere_voting_management_system.entity.Ballot;
 import auca.ac.rw.vote_sphere_voting_management_system.entity.BallotStatus;
@@ -103,5 +104,15 @@ public class BallotService {
         ballot.setStatus(newStatus);
         ballotRepository.save(ballot);
         return "Ballot status updated successfully";
+    }
+
+        public List<Object[]> getStatsByStatus() {
+        return ballotRepository.statsByStatus();
+    }
+
+    @Transactional
+    public String cancelDay(UUID electionOfficerId, LocalDate date) {
+        int count = ballotRepository.cancelDay(electionOfficerId, date, BallotStatus.SPOILED, BallotStatus.COUNTED);
+        return count + " ballots cancelled";
     }
 }

@@ -92,4 +92,16 @@ public class BallotController {
         }
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(message);
     }
+
+        @GetMapping("/stats/by-status")
+    public List<Object[]> getStatsByStatus() {
+        return ballotService.getStatsByStatus();
+    }
+
+    @PatchMapping("/cancel-day")
+    public ResponseEntity<String> cancelDay(@RequestParam UUID electionOfficerId, @RequestParam String date) {
+        LocalDate day = LocalDate.parse(date);
+        String message = ballotService.cancelDay(electionOfficerId, day);
+        return ResponseEntity.status(HttpStatus.OK).body(message);
+    }
 }
