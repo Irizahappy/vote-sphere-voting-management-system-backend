@@ -34,4 +34,8 @@ public interface BallotRepository extends JpaRepository<Ballot, UUID> {
                   @Param("date") LocalDate date,
                   @Param("spoiled") BallotStatus spoiled,
                   @Param("counted") BallotStatus counted);
+
+    long countByPollDate(LocalDate pollDate);
+
+    long countByStatus(BallotStatus status);
 }

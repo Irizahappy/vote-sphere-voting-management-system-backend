@@ -7,6 +7,10 @@ import java.util.UUID;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.web.bind.annotation.*;
 
 import auca.ac.rw.vote_sphere_voting_management_system.entity.Ballot;
@@ -103,5 +107,15 @@ public class BallotController {
         LocalDate day = LocalDate.parse(date);
         String message = ballotService.cancelDay(electionOfficerId, day);
         return ResponseEntity.status(HttpStatus.OK).body(message);
+    }
+        @GetMapping("/page")
+    public Page<Ballot> getPage(@RequestParam int page, @RequestParam int size, @RequestParam String sort) {
+        String[] parts = sort.split(",");
+        Sort.Direction direction = Sort.Direction.ASC;
+        if (parts.length > 1 && parts[1].equalsIgnoreCase("desc")) {
+            direction = Sort.Direction.DESC;
+        }
+        Pageable pageable = PageRequest.of(page, size, Sort.by(direction, parts[0]));
+        return ballotService.getPage(pageable);
     }
 }
